@@ -1,0 +1,46 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+const char* ssid = "Yk";
+const char* password = "123456789";
+
+const int mq2Pin = 34; // Analog pin
+
+String apiKey = "C73ASNUN946UBZU8";  // Replace with ThingSpeak Write API Key
+const char* server = "http://api.thingspeak.com/update";
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi Connected!");
+}
+
+void loop() {
+  int sensorValue = analogRead(mq2Pin);
+  float ppm = map(sensorValue, 0, 4095, 200, 2000); // Simulated PPM
+
+  Serial.print("Analog MQ2 Value: ");
+  Serial.print(sensorValue);
+  Serial.print(" -> Estimated PPM: ");
+  Serial.println(ppm);
+
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    String url = server + String("?api_key=") + apiKey + "&field1=" + String(ppm);
+    http.begin(url);
+    int httpCode = http.GET();
+    if (httpCode > 0) {
+      Serial.println("Data sent to ThingSpeak!");
+    } else {
+      Serial.println("Failed to send data.");
+    }
+    http.end();
+  }
+
+  delay(15000); // 15 seconds interval
+}
