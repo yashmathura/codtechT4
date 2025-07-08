@@ -21,4 +21,4 @@ WiFi (Wokwi / Physical)
 
 ThingSpeak account (for cloud storage and graphing)
 # OUTPUT
-![image alt(https://github.com/yashmathura/codtechT4/blob/49f491b09ced81150bf53d853b740ca0b6aa6352/Screenshot%202025-07-08%20190541.png)
+![image alt](https://github.com/yashmathura/codtechT4/blob/36785e7d6f0542ff0f19060bb9775ce1e80020a6/Screenshot%202025-07-08%20190541.png)
